@@ -9,6 +9,10 @@ choice is to keep **AMP activity evidence** separate from **segmentation labels*
 A compound can be experimentally active without proving that its written
 sequence is a native fragment of a longer parent protein.
 
+For simple handoff, use `SPEAR_596_wetlab_validated.tsv` for the complete
+wet-lab-positive sequence set and `SPEAR_270_strict_segmentation.tsv` for exact
+parent-to-fragment labels.
+
 ## Release statistics
 
 | Layer | Count | Intended use |

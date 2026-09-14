@@ -9,6 +9,12 @@ This directory separates two questions that must not be conflated:
 
 ## What to use
 
+- `SPEAR_596_wetlab_validated.tsv` is the broad one-row-per-sequence view. All
+  596 sequences have positive wet-lab evidence. Modified and synthetic peptides
+  are intentionally retained; repeated assays and papers are aggregated.
+- `SPEAR_270_strict_segmentation.tsv` is the strict one-row-per-label view for
+  training or evaluating parent-to-fragment segmentation. It includes the
+  parent protein and exact peptide coordinates.
 - `df_wetlab_validated_sota.tsv` is the requested Vinay-facing five-column
   table: `sequence, wetlab_experiment, mic, paper_title, paper_doi`. It has
   2,449 assay rows, 596 unique canonical strings, and all 22 primary papers.
@@ -38,6 +44,12 @@ Therefore 331 sequence-paper records remain valid AMP assay evidence but are
 not cleavage labels: 261 lack a resolved biological parent (mostly synthetic
 designs), 35 have ambiguous parent sequences, 23 are supported only as modified
 chemistry/stereochemistry, and 12 were tested as engineered constructs.
+
+Modification is not the main reason the broad set has 596 sequences while the
+strict set has 270. Allowing modified and engineered compounds while retaining
+the exact-parent requirements raises the usable mapping set only to 280
+sequence-paper mappings (277 unique sequences). Most of the remaining peptides
+cannot define a segmentation target because no unique longer parent is known.
 
 The five-column table intentionally preserves the requested schema, but a plain
 amino-acid string cannot encode C-terminal amidation, all-D stereochemistry, or

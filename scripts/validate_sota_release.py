@@ -96,6 +96,16 @@ if sum(r["exact_reference_match"] == "True" for r in challenge) != 23:
 if sum(float(r["max_levenshtein_ratio"]) > 0.8 for r in challenge) != 93:
     fail("unexpected challenge >0.8 similarity count")
 
+broad_view = rows("SPEAR_596_wetlab_validated.tsv")
+if len(broad_view) != 596 or len({r["sequence"] for r in broad_view}) != 596:
+    fail("broad handoff view must contain exactly 596 unique sequences")
+if any(r["wetlab_validated"] != "True" for r in broad_view):
+    fail("broad handoff view contains a row without positive wet-lab evidence")
+
+strict_view = rows("SPEAR_270_strict_segmentation.tsv")
+if strict_view != gold:
+    fail("strict handoff view differs from the validated segmentation gold table")
+
 if errors:
     print("FAIL")
     for error in errors[:100]:
