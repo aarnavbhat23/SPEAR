@@ -21,7 +21,8 @@ Curated 8 September 2026 from final journal publications associated with [César
 6. `df_amp_engineered.tsv`: **14 constructs** from the core mining papers, including added-Pro and D/retro-inverso variants. This is not a complete catalogue of de novo or engineered peptides from the 10 synthetic-design context papers.
 7. `df_amp_nonfragment_candidates.tsv`: **22 candidates** whose only resolved source equals the whole deposited sequence. They remain available without being represented as verified fragments of a longer protein.
 8. `source_manifest.json`, `dataset_summary.json`, `validation_report.json` and `reproducibility/`: provenance, machine-readable counts, validation and reconstruction code.
-9. `df_wetlab_validated.tsv`: **1,551 complete measured peptide–assay rows** for **280 distinct sequences** from the journal-only César catalogue. See [`data/WETLAB_VALIDATED.md`](data/WETLAB_VALIDATED.md) for extraction coverage and the separate AMP Challenge similarity audit.
+9. `df_wetlab_validated.tsv`: **2,449 wet-lab-supported peptide–assay rows** for **596 distinct sequences**, covering **all 22 primary papers** in the journal-only César catalogue. Of these, 2,342 rows have an exact reported MIC and 107 retain a blank MIC where activity is established but the numerical cell is graphical or the public mapping is incomplete. See [`data/WETLAB_VALIDATED.md`](data/WETLAB_VALIDATED.md).
+10. `df_cesar_wetlab_round1.tsv`, `df_cesar_murine_validated.tsv`, and `df_wetlab_heatmap_results.tsv`: paper-level cohort audit, source-resolved murine evidence, and the broader positive/censored assay-cell extraction.
 
 ## Main-table interpretation
 
@@ -79,5 +80,4 @@ Count peptide discoveries by sequence/DOI, not by expanded parent rows. For a st
 The bundle contains frozen candidate annotations, parent sequences/matches and the published AMPSphere FASTA. `python3 reproducibility/rebuild.py --output rebuilt` reconstructs the tables from those frozen inputs using the standard Python library. The output ordering and values are deterministic. Source-extraction scripts and the source manifest document how the curation was assembled, including manual transcriptions from final tables. Re-fetching historical source databases is not guaranteed to reproduce their current contents; source hashes and frozen records preserve this release. No model weights or inference are required.
 
 Primary article and supplementary links are in the paper audit, coverage table and source manifest. Cite the original papers when reusing their sequence data. This compilation makes no claim to relicense the source datasets.
-
 
