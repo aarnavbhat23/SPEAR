@@ -1,5 +1,9 @@
 data/*.tsv filter=lfs diff=lfs merge=lfs -text
 data/*.json filter=lfs diff=lfs merge=lfs -text
+data/**/*.json filter=lfs diff=lfs merge=lfs -text
+data/**/*.jsonl filter=lfs diff=lfs merge=lfs -text
+data/**/*.tsv filter=lfs diff=lfs merge=lfs -text
+data/**/*.xlsx filter=lfs diff=lfs merge=lfs -text
 data/Data_raw_grok.zip filter=lfs diff=lfs merge=lfs -text
 data/df_amp_encryptome_2.tsv filter=lfs diff=lfs merge=lfs -text
 data/df_amp_encryptome_gpt6.tsv filter=lfs diff=lfs merge=lfs -text

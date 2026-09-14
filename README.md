@@ -23,6 +23,7 @@ Curated 8 September 2026 from final journal publications associated with [César
 8. `source_manifest.json`, `dataset_summary.json`, `validation_report.json` and `reproducibility/`: provenance, machine-readable counts, validation and reconstruction code.
 9. `df_wetlab_validated.tsv`: **2,449 wet-lab-supported peptide–assay rows** for **596 distinct sequences**, covering **all 22 primary papers** in the journal-only César catalogue. Of these, 2,342 rows have an exact reported MIC and 107 retain a blank MIC where activity is established but the numerical cell is graphical or the public mapping is incomplete. See [`data/WETLAB_VALIDATED.md`](data/WETLAB_VALIDATED.md).
 10. `df_cesar_wetlab_round1.tsv`, `df_cesar_murine_validated.tsv`, and `df_wetlab_heatmap_results.tsv`: paper-level cohort audit, source-resolved murine evidence, and the broader positive/censored assay-cell extraction.
+11. `data/spear_sota/`: chemistry-aware wet-lab assays, explicit segmentation inclusion decisions, a 270-label strict gold set, and MMseqs2 homology-safe model splits. Start with [`data/spear_sota/README.md`](data/spear_sota/README.md).
 
 ## Main-table interpretation
 
@@ -80,4 +81,3 @@ Count peptide discoveries by sequence/DOI, not by expanded parent rows. For a st
 The bundle contains frozen candidate annotations, parent sequences/matches and the published AMPSphere FASTA. `python3 reproducibility/rebuild.py --output rebuilt` reconstructs the tables from those frozen inputs using the standard Python library. The output ordering and values are deterministic. Source-extraction scripts and the source manifest document how the curation was assembled, including manual transcriptions from final tables. Re-fetching historical source databases is not guaranteed to reproduce their current contents; source hashes and frozen records preserve this release. No model weights or inference are required.
 
 Primary article and supplementary links are in the paper audit, coverage table and source manifest. Cite the original papers when reusing their sequence data. This compilation makes no claim to relicense the source datasets.
-
