@@ -106,6 +106,37 @@ strict_view = rows("SPEAR_270_strict_segmentation.tsv")
 if strict_view != gold:
     fail("strict handoff view differs from the validated segmentation gold table")
 
+activity_peptides = rows("SPEAR_596_activity_peptides.tsv")
+if len(activity_peptides) != 596 or len({r["sequence"] for r in activity_peptides}) != 596:
+    fail("activity peptide index must contain exactly 596 unique sequences")
+if {r["activity_split"] for r in activity_peptides} != {"train", "val", "test"}:
+    fail("activity peptide index must contain train, val, and test splits")
+activity_cluster_splits = {}
+for row in activity_peptides:
+    cluster = row["activity_homology_cluster"]
+    split = row["activity_split"]
+    if cluster in activity_cluster_splits and activity_cluster_splits[cluster] != split:
+        fail(f"activity cluster crosses splits: {cluster}")
+    activity_cluster_splits[cluster] = split
+
+activity_measurements = rows("SPEAR_2449_activity_measurements.tsv")
+if len(activity_measurements) != 2449:
+    fail("activity measurement table must contain exactly 2,449 assay rows")
+peptide_lookup = {r["peptide_id"]: r for r in activity_peptides}
+for row in activity_measurements:
+    peptide = peptide_lookup.get(row["peptide_id"])
+    if not peptide or peptide["sequence"] != row["sequence"]:
+        fail(f"activity measurement has invalid peptide link: {row['assay_id']}")
+        continue
+    if peptide["activity_homology_cluster"] != row["activity_homology_cluster"] or peptide["activity_split"] != row["activity_split"]:
+        fail(f"activity measurement crosses its peptide split: {row['assay_id']}")
+if sum(r["regression_eligible"] == "True" for r in activity_measurements) != 2352:
+    fail("unexpected activity MIC regression row count")
+if sum(r["primary_uM_regression_eligible"] == "True" for r in activity_measurements) != 1957:
+    fail("unexpected primary µM regression row count")
+if sum(r["regression_task"] == "MIC_ug_per_mL" for r in activity_measurements) != 395:
+    fail("unexpected secondary mass-concentration regression row count")
+
 if errors:
     print("FAIL")
     for error in errors[:100]:

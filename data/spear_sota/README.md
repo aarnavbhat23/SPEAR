@@ -12,6 +12,13 @@ This directory separates two questions that must not be conflated:
 - `SPEAR_596_wetlab_validated.tsv` is the broad one-row-per-sequence view. All
   596 sequences have positive wet-lab evidence. Modified and synthetic peptides
   are intentionally retained; repeated assays and papers are aggregated.
+- `SPEAR_596_activity_peptides.tsv` is the model index for the activity task.
+  It assigns each sequence to a 60%-identity peptide cluster and keeps every
+  cluster within one train/validation/test split.
+- `SPEAR_2449_activity_measurements.tsv` is the linked target-conditioned MIC
+  table. Each row is one peptide-assay-target observation, with normalized
+  target text, numeric MIC fields, a regression-eligibility flag, and a sample
+  weight that prevents heavily tested peptides from dominating each unit task.
 - `SPEAR_270_strict_segmentation.tsv` is the strict one-row-per-label view for
   training or evaluating parent-to-fragment segmentation. It includes the
   parent protein and exact peptide coordinates.
@@ -67,6 +74,23 @@ deterministically (seed 0) to train/validation/test within proteome strata.
 This conservative rule leaves 5,481 parents in train, 650 in validation, 673 in
 test, and 5,474 in the wet-lab holdout. It is intentionally stricter than an
 accession-only split because homologous parents otherwise leak across folds.
+
+The activity tables use a separate peptide-level split because many of the 596
+active compounds have no biological parent. Peptides are clustered with
+MMseqs2 at 60% identity and 80% coverage; all assay rows inherit the split of
+their peptide cluster. Do not randomly split the 2,449 assay rows. The same or
+closely related peptide would otherwise appear in both training and evaluation.
+
+The activity measurements intentionally remain long rather than creating one
+MIC column per strain. A wide strain matrix would be mostly missing and would
+discard assay context. Train a target-conditioned MIC regressor on rows marked
+`regression_eligible=True`; use `sequence_task_sample_weight` when each peptide
+should contribute equal total weight. Use `MIC_uM` as the primary comparable
+regression task; keep `MIC_ug_per_mL` as a separate task rather than mixing raw
+values from different units. The 97 positive rows without an exact MIC remain
+useful as evidence but are not numeric regression labels. These tables
+contain only positive compounds and therefore do not by themselves support a
+binary AMP-versus-non-AMP classifier.
 
 ## AMP Challenge status
 

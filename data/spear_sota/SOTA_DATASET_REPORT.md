@@ -13,6 +13,12 @@ For simple handoff, use `SPEAR_596_wetlab_validated.tsv` for the complete
 wet-lab-positive sequence set and `SPEAR_270_strict_segmentation.tsv` for exact
 parent-to-fragment labels.
 
+For activity modeling, use `SPEAR_596_activity_peptides.tsv` as the peptide and
+split index and join it to `SPEAR_2449_activity_measurements.tsv` by
+`peptide_id`. The measurement table contains 1,957 exact µM labels, 395 exact
+µg/mL labels, and 97 positive observations without a numerical MIC. Unit tasks
+are kept separate, and 60%-identity peptide clusters never cross splits.
+
 ## Release statistics
 
 | Layer | Count | Intended use |
